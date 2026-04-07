@@ -1,4 +1,5 @@
 *** Settings ***
+<<<<<<< HEAD
 
 Library  SeleniumLibrary
  
@@ -49,3 +50,20 @@ RegisterToApplication
 
     click button    id:register-button
  
+=======
+Library    SeleniumLibrary
+
+*** Variables ***
+${URL}       https://example.com/login
+${USERNAME}  testuser
+${PASSWORD}  testpass
+
+*** Test Cases ***
+Login Test
+    Open Browser    ${URL}    chrome
+    Input Text      id=username    ${USERNAME}
+    Input Text      id=password    ${PASSWORD}
+    Click Button    id=login
+    Page Should Contain    Welcome
+    Close Browser
+>>>>>>> fc2893210031fcd61eed3573dc5d7c4bdab2531e
