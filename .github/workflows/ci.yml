@@ -51,9 +51,20 @@ jobs:
           FLYWAY_USER: myuser
           FLYWAY_PASSWORD: mypassword
 
+      - name: Install Chrome and Chromedriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip xvfb
+          sudo apt-get install -y google-chrome-stable
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          wget https://chromedriver.storage.googleapis.com/$(echo $CHROME_VERSION | cut -d. -f1)/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          chromedriver --version
+
       - name: Run Robot Framework tests
         run: |
-          robot tests/login.robot
+          xvfb-run --auto-servernum robot tests/login.robot
 
       - name: Upload Robot Framework reports
         uses: actions/upload-artifact@v4
