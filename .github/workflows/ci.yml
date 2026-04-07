@@ -51,16 +51,14 @@ jobs:
           FLYWAY_USER: myuser
           FLYWAY_PASSWORD: mypassword
 
-      - name: Install Chrome and Chromedriver
+      - name: Install Chrome and Chromedriver (apt packages)
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb
+          sudo apt-get install -y xvfb
           sudo apt-get install -y google-chrome-stable
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-          wget https://chromedriver.storage.googleapis.com/$(echo $CHROME_VERSION | cut -d. -f1)/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
+          sudo apt-get install -y chromium-chromedriver
           chromedriver --version
+          google-chrome --version
 
       - name: Run Robot Framework tests
         run: |
